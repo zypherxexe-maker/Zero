@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zero | Roblox Assets Hub</title>
+<style>
+:root {
+  --bg: #000000;
+  --surface: #0a0a0c;
+  --surface-elevated: #111115;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.2);
+  --text: #ffffff;
+  --text-muted: #8a8a93;
+  --roblox-blue: #00A2FF;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+  line-height: 1.5;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Subtle Grid & Ambient Cursor Glow */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, #000 40%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cursor-glow {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Topbar with Video Hover/Scroll/Pill Effect */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s ease, padding 0.3s ease;
+}
+
+header.scrolled {
+  background: rgba(5, 5, 7, 0.92);
+  padding: 12px 40px;
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.04em;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.brand-icon {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: #000;
+  border-radius: 7px;
+  font-weight: 900;
+  font-size: 15px;
+  transition: transform 0.25s ease;
+}
+
+.brand:hover .brand-icon {
+  transform: rotate(-6deg) scale(1.05);
+}
+
+/* Topbar Nav with Sliding Pill & Glow Effect */
+.nav-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  padding: 4px;
+  border-radius: 999px;
+}
+
+.nav-pill {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  background: rgba(255, 255, 255, 0.11);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.08);
+}
+
+.nav-wrap button {
+  position: relative;
+  z-index: 1;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-wrap button:hover,
+.nav-wrap button.active {
+  color: #ffffff;
+}
+
+.user-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #111115;
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.owner-tag {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(0, 162, 255, 0.15);
+  color: var(--roblox-blue);
+  border: 1px solid rgba(0, 162, 255, 0.35);
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-left: 2px;
+}
+
+/* Roblox Verified Badge SVG */
+.verified-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.btn-outline {
+  background: #121216;
+  color: #fff;
+  border: 1px solid var(--border);
+  padding: 7px 14px;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  background: #1c1c22;
+  border-color: var(--border-hover);
+}
+
+.btn-primary {
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-primary.full {
+  width: 100%;
+}
+
+/* Main Layout */
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 24px 24px 80px;
+}
+
+.hide {
+  display: none !important;
+}
+
+/* Hero with Video Typewriter Effect */
+.hero {
+  text-align: center;
+  padding: 56px 0 40px;
+}
+
+.hero h1 {
+  font-size: clamp(34px, 5vw, 58px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+
+.type-wrapper {
+  display: inline-block;
+  color: #ffffff;
+  min-width: 120px;
+}
+
+.type-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 0.88em;
+  background-color: #ffffff;
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.hero p {
+  color: var(--text-muted);
+  font-size: 15.5px;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+/* Auth Box */
+.auth-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 400px;
+  margin: 12px auto 0;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.75);
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 4px;
+  background: #050507;
+  border: 1px solid var(--border);
+  padding: 4px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+}
+
+.auth-tabs button {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  padding: 8px;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.auth-tabs button.on {
+  background: #16161b;
+  color: #ffffff;
+}
+
+.field {
+  width: 100%;
+  padding: 11px 13px;
+  margin-bottom: 12px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: #060608;
+  color: #ffffff;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.field:focus {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.err {
+  color: #f87171;
+  font-size: 13px;
+  min-height: 18px;
+  margin-bottom: 8px;
+}
+
+/* Filter Toolbar */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 12px 16px;
+  border-radius: 14px;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 200px;
+  background: #060608;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  background: #0d0d11;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 6px 13px;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chip:hover {
+  color: #fff;
+  border-color: var(--border-hover);
+}
+
+.chip.on {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+  font-weight: 600;
+}
+
+/* Asset Grid & Cards */
+.asset-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+  gap: 18px;
+}
+
+.asset-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.22s ease, border-color 0.22s ease;
+}
+
+.asset-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+}
+
+.thumb-box {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: #060608;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.thumb-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumb-ext {
+  font-family: monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: #52525b;
+  letter-spacing: 0.05em;
+}
+
+.cat-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e4e4e7;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 6px;
+}
+
+.fav-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform 0.15s, background 0.15s;
+}
+
+.fav-btn:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.fav-btn.loved {
+  color: #f43f5e;
+}
+
+.card-body {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.asset-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.asset-desc {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 36px;
+}
+
+.creator-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-muted);
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.creator-name {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #d4d4d8;
+  font-weight: 500;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.dl-btn {
+  flex: 1;
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.dl-btn:hover {
+  opacity: 0.88;
+}
+
+.del-btn {
+  background: rgba(239, 68, 68, 0.12);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  padding: 9px 11px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.del-btn:hover {
+  background: rgba(239, 68, 68, 0.22);
+}
+
+/* Upload Panel */
+.panel-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.panel-card h2 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.panel-card p.sub {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #d4d4d8;
+  margin-bottom: 6px;
+}
+
+.file-drop {
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  background: #060608;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.file-drop:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.thumb-preview-wrap {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.thumb-preview-wrap img {
+  width: 80px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+/* Profile & Stats */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.stat-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.stat-box b {
+  display: block;
+  font-size: 28px;
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+}
+
+.stat-box span {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.prog-track {
+  height: 8px;
+  background: #141418;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.prog-fill {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 99px;
+  transition: width 0.35s ease;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  border: 1px dashed var(--border);
+  border-radius: 16px;
+  color: var(--text-muted);
+}
+
+@media (max-width: 760px) {
+  header {
+    padding: 14px 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .nav-wrap {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<header id="topbar">
+  <div class="brand" onclick="setTab('explore')">
+    <div class="brand-icon">Z</div>
+    <span>Zero</span>
+  </div>
+
+  <!-- Topbar Navigation with Sliding Pill Effect -->
+  <nav class="nav-wrap hide" id="navBar">
+    <div class="nav-pill" id="navPill"></div>
+    <button data-tab="explore" class="active" onclick="setTab('explore')">Explore</button>
+    <button data-tab="trending" onclick="setTab('trending')">Trending</button>
+    <button data-tab="favs" onclick="setTab('favs')">Favorites</button>
+    <button data-tab="upload" onclick="setTab('upload')">Import Asset</button>
+    <button data-tab="profile" onclick="setTab('profile')">Profile</button>
+  </nav>
+
+  <div class="user-area hide" id="userArea">
+    <div class="user-pill" id="headerUserBadge"></div>
+    <button class="btn-outline" id="logoutBtn">Log out</button>
+  </div>
+</header>
+
+<main>
+  <!-- AUTH VIEW -->
+  <section id="authView">
+    <div class="hero">
+      <h1>Free Roblox <span class="type-wrapper"><span id="typeWord">Models</span><span class="type-cursor"></span></span> Hub</h1>
+      <p>Create an account with your email to browse, download, and publish Roblox assets, scripts, GUIs, and models.</p>
+    </div>
+
+    <div class="auth-box">
+      <div class="auth-tabs">
+        <button id="tabLogin" class="on" onclick="setAuthMode('login')">Log in</button>
+        <button id="tabSignup" onclick="setAuthMode('signup')">Sign up</button>
+      </div>
+      <input id="authUser" class="field hide" placeholder="Roblox / Display Username" autocomplete="username">
+      <input id="authEmail" class="field" type="email" placeholder="Email address" autocomplete="email">
+      <input id="authPass" class="field" type="password" placeholder="Password (6+ characters)" autocomplete="current-password">
+      <div class="err" id="authErr"></div>
+      <button class="btn-primary full" id="authSubmit">Log in</button>
+    </div>
+  </section>
+
+  <!-- APP VIEW -->
+  <section id="appView" class="hide">
+    <div class="hero" style="padding: 36px 0 28px;">
+      <h1>Roblox <span class="type-wrapper"><span id="typeWordApp">Assets</span><span class="type-cursor"></span></span> Library</h1>
+      <p>Community-uploaded Roblox models, Lua scripts, UI kits, maps, and audio—all free to download.</p>
+    </div>
+
+    <!-- TAB: EXPLORE -->
+    <div id="view-explore" class="tab-view">
+      <div class="toolbar">
+        <input id="searchInput" class="search-input" placeholder="Search Roblox models, scripts, GUIs, maps...">
+        <div class="chips" id="catChips"></div>
+      </div>
+      <div class="asset-grid" id="gridExplore"></div>
+      <div class="empty-state hide" id="emptyExplore">No Roblox assets found matching your filter.</div>
+    </div>
+
+    <!-- TAB: TRENDING -->
+    <div id="view-trending" class="tab-view hide">
+      <div class="asset-grid" id="gridTrending"></div>
+      <div class="empty-state hide" id="emptyTrending">No trending assets yet.</div>
+    </div>
+
+    <!-- TAB: FAVORITES -->
+    <div id="view-favs" class="tab-view hide">
+      <div class="asset-grid" id="gridFavs"></div>
+      <div class="empty-state hide" id="emptyFavs">Click the heart icon on any Roblox asset to save it here.</div>
+    </div>
+
+    <!-- TAB: IMPORT ASSET -->
+    <div id="view-upload" class="tab-view hide">
+      <div class="panel-card">
+        <h2>Import Roblox Asset</h2>
+        <p class="sub">Upload `.rbxm`, `.rbxmx`, `.rbxl`, `.lua`, audio, or textures with a custom thumbnail.</p>
+
+        <div class="form-group">
+          <label>Asset Title *</label>
+          <input id="upTitle" class="field" placeholder="e.g. Advanced Combat System v2">
+        </div>
+
+        <div class="form-group">
+          <label>Category *</label>
+          <select id="upCat" class="field"></select>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <input id="upDesc" class="field" placeholder="Short summary of what this Roblox asset includes...">
+        </div>
+
+        <div class="form-group">
+          <label>Thumbnail Image (PNG / JPG / WebP)</label>
+          <div class="file-drop" onclick="document.getElementById('upThumb').click()">
+            <span id="thumbLabel" style="font-size:13px;color:var(--text-muted)">Click to choose a cover thumbnail image</span>
+            <input type="file" id="upThumb" accept="image/*" class="hide">
+          </div>
+          <div class="thumb-preview-wrap hide" id="thumbPreviewWrap">
+            <img id="thumbPreviewImg" src="" alt="Preview">
+            <span style="font-size:12px;color:#86efac">Thumbnail ready</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Asset File (.rbxm, .rbxmx, .rbxl, .lua, .mp3, .png, .zip) *</label>
+          <div class="file-drop" onclick="document.getElementById('upFile').click()">
+            <span id="fileLabel" style="font-size:13px;color:var(--text-muted)">Click to select your Roblox asset file</span>
+            <input type="file" id="upFile" class="hide">
+          </div>
+        </div>
+
+        <div class="err" id="upErr"></div>
+        <button class="btn-primary full" id="publishBtn">Publish Asset</button>
+      </div>
+    </div>
+
+    <!-- TAB: PROFILE -->
+    <div id="view-profile" class="tab-view hide">
+      <div class="stats-grid">
+        <div class="stat-box"><b id="statDl">0</b><span>Total Downloads</span></div>
+        <div class="stat-box"><b id="statUploads">0</b><span>Published Assets</span></div>
+        <div class="stat-box"><b id="statFavs">0</b><span>Saved Favorites</span></div>
+        <div class="stat-box"><b id="statRank">Rookie</b><span>Creator Rank</span></div>
+      </div>
+
+      <div class="panel-card" style="max-width:100%;margin-bottom:18px">
+        <h3 style="font-size:16px;margin-bottom:4px">Rank Progression</h3>
+        <p id="rankText" style="color:var(--text-muted);font-size:13.5px"></p>
+        <div class="prog-track"><div class="prog-fill" id="rankBar" style="width:0%"></div></div>
+      </div>
+
+      <div class="panel-card" style="max-width:100%">
+        <h3 id="profIdentity" style="font-size:18px;display:flex;align-items:center;gap:8px;margin-bottom:4px"></h3>
+        <p id="profEmail" style="color:var(--text-muted);font-size:13.5px"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+const OWNER_EMAIL = "zypher.x.exe@gmail.com";
+const CATEGORIES = ["All", "Models", "Scripts", "UI / GUIs", "Maps", "Audio", "Textures"];
+const RANKS = [["Rookie", 0], ["Builder", 5], ["Scripter", 15], ["Developer", 40]];
+
+let authMode = "login";
+let currentTab = "explore";
+let currentCat = "All";
+let pendingThumbDataUrl = "";
+let pendingFileObj = null;
+
+// Roblox-style Verified Checkmark Badge SVG
+function verifiedBadgeHTML() {
+  return `<span class="verified-badge" title="Verified Owner">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+      <path d="M12 1.5L14.8 3.6L18.3 3.4L19.6 6.7L22.5 8.6L21.6 12L22.5 15.4L19.6 17.3L18.3 20.6L14.8 20.4L12 22.5L9.2 20.4L5.7 20.6L4.4 17.3L1.5 15.4L2.4 12L1.5 8.6L4.4 6.7L5.7 3.4L9.2 3.6L12 1.5Z" fill="#00A2FF"/>
+      <path d="M8.5 12.2L10.8 14.5L15.6 9.5" stroke="#FFFFFF" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>`;
+}
+
+// LocalStorage Helpers
+const lsGet = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+const sha = async s => [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s)))].map(b => b.toString(16).padStart(2, "0")).join("");
+
+// Seed sample Roblox assets on first load
+function ensureSeedAssets() {
+  if (!lsGet("zero_roblox_assets", null)) {
+    lsSet("zero_roblox_assets", [
+      {
+        id: "seed-1",
+        title: "R15 Smooth Combat & Parry System",
+        cat: "Scripts",
+        desc: "Modular Server/Client combat framework with hitboxes, stun states, and parry timing.",
+        fileName: "CombatSystem_v2.rbxm",
+        fileSize: 48200,
+        ownerEmail: OWNER_EMAIL,
+        ownerName: "Zypher",
+        downloads: 142,
+        thumb: "",
+        content: "-- R15 Smooth Combat System\nlocal Combat = {}\nreturn Combat"
+      },
+      {
+        id: "seed-2",
+        title: "Sci-Fi Lobby & Teleport Hub",
+        cat: "Maps",
+        desc: "Optimized low-poly futuristic lobby with spawn pads, leaderboards, and lighting preset.",
+        fileName: "SciFi_Lobby.rbxl",
+        fileSize: 1840000,
+        ownerEmail: OWNER_EMAIL,
+        ownerName: "Zypher",
+        downloads: 98,
+        thumb: "",
+        content: "<roblox version=\"4\"></roblox>"
+      },
+      {
+        id: "seed-3",
+        title: "Minimalist Inventory & Shop GUI",
+        cat: "UI / GUIs",
+        desc: "Tweened dark-mode inventory grid, rarity borders, and viewport frame previewer.",
+        fileName: "CleanInventoryUI.rbxmx",
+        fileSize: 92400,
+        ownerEmail: OWNER_EMAIL,
+        ownerName: "Zypher",
+        downloads: 76,
+        thumb: "",
+        content: "<roblox version=\"4\"></roblox>"
+      }
+    ]);
+  }
+}
+
+// Topbar Scroll & Sliding Pill Animation
+window.addEventListener("scroll", () => {
+  document.getElementById("topbar").classList.toggle("scrolled", window.scrollY > 16);
+});
+
+function updateNavPill() {
+  const activeBtn = document.querySelector(`#navBar button[data-tab="${currentTab}"]`);
+  const pill = document.getElementById("navPill");
+  if (!activeBtn || !pill) return;
+  pill.style.width = activeBtn.offsetWidth + "px";
+  pill.style.transform = `translateX(${activeBtn.offsetLeft - 4}px)`;
+}
+window.addEventListener("resize", updateNavPill);
+
+// Ambient Cursor Glow
+const glow = document.getElementById("cursorGlow");
+document.addEventListener("mousemove", e => {
+  glow.style.left = e.clientX + "px";
+  glow.style.top = e.clientY + "px";
+});
+
+// Typewriter Effect in Hero
+function startTypewriter(elId, wordList) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  let wIdx = 0, cIdx = wordList[0].length, deleting = false;
+  function tick() {
+    const word = wordList[wIdx];
+    cIdx += deleting ? -1 : 1;
+    el.textContent = word.substring(0, cIdx);
+    let wait = deleting ? 55 : 95;
+    if (!deleting && cIdx === word.length) { wait = 1400; deleting = true; }
+    else if (deleting && cIdx === 0) { deleting = false; wIdx = (wIdx + 1) % wordList.length; wait = 250; }
+    setTimeout(tick, wait);
+  }
+  setTimeout(tick, 1400);
+}
+startTypewriter("typeWord", ["Models", "Scripts", "GUIs", "Maps"]);
+startTypewriter("typeWordApp", ["Assets", "Models", "Scripts", "Maps"]);
+
+// Auth Logic
+function setAuthMode(m) {
+  authMode = m;
+  document.getElementById("tabLogin").classList.toggle("on", m === "login");
+  document.getElementById("tabSignup").classList.toggle("on", m === "signup");
+  document.getElementById("authUser").classList.toggle("hide", m === "login");
+  document.getElementById("authSubmit").textContent = m === "login" ? "Log in" : "Create Account";
+  document.getElementById("authErr").textContent = "";
+}
+
+document.getElementById("authSubmit").onclick = async () => {
+  const email = document.getElementById("authEmail").value.trim().toLowerCase();
+  const pass = document.getElementById("authPass").value;
+  const username = document.getElementById("authUser").value.trim();
+  const errEl = document.getElementById("authErr");
+  const users = lsGet("zero_users", {});
+
+  if (!/^\S+@\S+\.\S+$/.test(email)) return errEl.textContent = "Please enter a valid email address.";
+  if (pass.length < 6) return errEl.textContent = "Password must be at least 6 characters.";
+
+  const hash = await sha(email + pass);
+
+  if (authMode === "signup") {
+    if (!username) return errEl.textContent = "Please choose a username.";
+    if (users[email]) return errEl.textContent = "An account with this email already exists.";
+    users[email] = { name: username, hash };
+    lsSet("zero_users", users);
+    lsSet("zero_session", email);
+  } else {
+    if (!users[email] || users[email].hash !== hash) {
+      return errEl.textContent = "Invalid email or password.";
+    }
+    lsSet("zero_session", email);
+  }
+  syncSession();
+};
+
+document.getElementById("logoutBtn").onclick = () => {
+  lsSet("zero_session", null);
+  syncSession();
+};
+
+const currentEmail = () => lsGet("zero_session", null);
+const isOwner = email => (email || "").toLowerCase() === OWNER_EMAIL;
+
+function syncSession() {
+  const email = currentEmail();
+  const users = lsGet("zero_users", {});
+  const user = email && users[email];
+
+  document.getElementById("authView").classList.toggle("hide", !!user);
+  document.getElementById("appView").classList.toggle("hide", !user);
+  document.getElementById("navBar").classList.toggle("hide", !user);
+  document.getElementById("userArea").classList.toggle("hide", !user);
+
+  if (user) {
+    const owner = isOwner(email);
+    document.getElementById("headerUserBadge").innerHTML = `
+      <span>${escapeHTML(user.name)}</span>
+      ${owner ? verifiedBadgeHTML() + `<span class="owner-tag">Owner</span>` : ""}
+    `;
+    setTimeout(updateNavPill, 20);
+    renderAll();
+  }
+}
+
+function setTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll(".tab-view").forEach(el => el.classList.add("hide"));
+  document.getElementById("view-" + tab).classList.remove("hide");
+  document.querySelectorAll("#navBar button").forEach(btn => {
+    btn.classList.toggle("active", btn.getAttribute("data-tab") === tab);
+  });
+  updateNavPill();
+  renderAll();
+}
+
+// Thumbnail & Asset File Inputs
+document.getElementById("upThumb").onchange = e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    pendingThumbDataUrl = ev.target.result;
+    document.getElementById("thumbPreviewImg").src = pendingThumbDataUrl;
+    document.getElementById("thumbPreviewWrap").classList.remove("hide");
+    document.getElementById("thumbLabel").textContent = file.name;
+  };
+  reader.readAsDataURL(file);
+};
+
+document.getElementById("upFile").onchange = e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  pendingFileObj = file;
+  document.getElementById("fileLabel").textContent = `${file.name} (${formatBytes(file.size)})`;
+};
+
+document.getElementById("publishBtn").onclick = () => {
+  const title = document.getElementById("upTitle").value.trim();
+  const cat = document.getElementById("upCat").value;
+  const desc = document.getElementById("upDesc").value.trim() || "Roblox asset shared on Zero.";
+  const errEl = document.getElementById("upErr");
+
+  if (!title) return errEl.textContent = "Please enter an asset title.";
+  if (!pendingFileObj) return errEl.textContent = "Please select a Roblox asset file to import.";
+  errEl.textContent = "";
+
+  const email = currentEmail();
+  const user = lsGet("zero_users", {})[email];
+
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const assets = lsGet("zero_roblox_assets", []);
+    assets.unshift({
+      id: "asset-" + Date.now(),
+      title,
+      cat,
+      desc,
+      fileName: pendingFileObj.name,
+      fileSize: pendingFileObj.size,
+      ownerEmail: email,
+      ownerName: user.name,
+      downloads: 0,
+      thumb: pendingThumbDataUrl,
+      dataUrl: ev.target.result
+    });
+    lsSet("zero_roblox_assets", assets);
+
+    // Reset form
+    document.getElementById("upTitle").value = "";
+    document.getElementById("upDesc").value = "";
+    document.getElementById("thumbLabel").textContent = "Click to choose a cover thumbnail image";
+    document.getElementById("fileLabel").textContent = "Click to select your Roblox asset file";
+    document.getElementById("thumbPreviewWrap").classList.add("hide");
+    pendingThumbDataUrl = "";
+    pendingFileObj = null;
+
+    setTab("explore");
+  };
+  reader.readAsDataURL(pendingFileObj);
+};
+
+// User Stats & Favorites
+const getUserStats = () => lsGet("zero_stats_" + currentEmail(), { downloads: 0, favs: [] });
+const saveUserStats = st => lsSet("zero_stats_" + currentEmail(), st);
+
+function toggleFav(assetId) {
+  const st = getUserStats();
+  if (st.favs.includes(assetId)) {
+    st.favs = st.favs.filter(id => id !== assetId);
+  } else {
+    st.favs.push(assetId);
+  }
+  saveUserStats(st);
+  renderAll();
+}
+
+function downloadAsset(assetId) {
+  const assets = lsGet("zero_roblox_assets", []);
+  const item = assets.find(a => a.id === assetId);
+  if (!item) return;
+
+  const link = document.createElement("a");
+  if (item.dataUrl) {
+    link.href = item.dataUrl;
+  } else {
+    const blob = new Blob([item.content || "-- Zero Roblox Asset"], { type: "application/octet-stream" });
+    link.href = URL.createObjectURL(blob);
+  }
+  link.download = item.fileName;
+  link.click();
+
+  item.downloads = (item.downloads || 0) + 1;
+  lsSet("zero_roblox_assets", assets);
+
+  const st = getUserStats();
+  st.downloads = (st.downloads || 0) + 1;
+  saveUserStats(st);
+  renderAll();
+}
+
+function deleteAsset(assetId) {
+  const assets = lsGet("zero_roblox_assets", []).filter(a => a.id !== assetId);
+  lsSet("zero_roblox_assets", assets);
+  renderAll();
+}
+
+function buildCard(item, stats) {
+  const loved = stats.favs.includes(item.id);
+  const creatorVerified = isOwner(item.ownerEmail);
+  const canDelete = isOwner(currentEmail()) || item.ownerEmail === currentEmail();
+  const ext = (item.fileName.split(".").pop() || "RBXM").toUpperCase();
+
+  const card = document.createElement("div");
+  card.className = "asset-card";
+  card.innerHTML = `
+    <div class="thumb-box">
+      ${item.thumb
+        ? `<img src="${item.thumb}" alt="${escapeHTML(item.title)}">`
+        : `<div class="thumb-ext">.${escapeHTML(ext)}</div>`
+      }
+      <span class="cat-badge">${escapeHTML(item.cat)}</span>
+      <button class="fav-btn ${loved ? "loved" : ""}" title="Favorite">${loved ? "♥" : "♡"}</button>
+    </div>
+    <div class="card-body">
+      <div class="asset-title" title="${escapeHTML(item.title)}">${escapeHTML(item.title)}</div>
+      <div class="asset-desc">${escapeHTML(item.desc)}</div>
+      <div class="creator-row">
+        <span class="creator-name">
+          ${escapeHTML(item.ownerName)}
+          ${creatorVerified ? verifiedBadgeHTML() : ""}
+        </span>
+        <span>${formatBytes(item.fileSize)} • ${item.downloads || 0} DL</span>
+      </div>
+      <div class="card-actions">
+        <button class="dl-btn">Download</button>
+        ${canDelete ? `<button class="del-btn" title="Remove Asset">✕</button>` : ""}
+      </div>
+    </div>
+  `;
+
+  card.querySelector(".fav-btn").onclick = () => toggleFav(item.id);
+  card.querySelector(".dl-btn").onclick = () => downloadAsset(item.id);
+  const del = card.querySelector(".del-btn");
+  if (del) del.onclick = () => deleteAsset(item.id);
+
+  return card;
+}
+
+function renderAll() {
+  const assets = lsGet("zero_roblox_assets", []);
+  const stats = getUserStats();
+  const email = currentEmail();
+  const user = lsGet("zero_users", {})[email] || {};
+
+  // Category Chips
+  const chipsEl = document.getElementById("catChips");
+  chipsEl.innerHTML = "";
+  CATEGORIES.forEach(c => {
+    const b = document.createElement("button");
+    b.className = "chip" + (c === currentCat ? " on" : "");
+    b.textContent = c;
+    b.onclick = () => { currentCat = c; renderAll(); };
+    chipsEl.appendChild(b);
+  });
+
+  // Explore Grid
+  const q = document.getElementById("searchInput").value.trim().toLowerCase();
+  const filtered = assets.filter(a =>
+    (currentCat === "All" || a.cat === currentCat) &&
+    (a.title.toLowerCase().includes(q) || a.desc.toLowerCase().includes(q) || a.ownerName.toLowerCase().includes(q))
+  );
+  const gridExplore = document.getElementById("gridExplore");
+  gridExplore.innerHTML = "";
+  filtered.forEach(a => gridExplore.appendChild(buildCard(a, stats)));
+  document.getElementById("emptyExplore").classList.toggle("hide", filtered.length > 0);
+
+  // Trending Grid
+  const trending = [...assets].sort((a, b) => (b.downloads || 0) - (a.downloads || 0)).slice(0, 8);
+  const gridTrending = document.getElementById("gridTrending");
+  gridTrending.innerHTML = "";
+  trending.forEach(a => gridTrending.appendChild(buildCard(a, stats)));
+  document.getElementById("emptyTrending").classList.toggle("hide", trending.length > 0);
+
+  // Favorites Grid
+  const favList = assets.filter(a => stats.favs.includes(a.id));
+  const gridFavs = document.getElementById("gridFavs");
+  gridFavs.innerHTML = "";
+  favList.forEach(a => gridFavs.appendChild(buildCard(a, stats)));
+  document.getElementById("emptyFavs").classList.toggle("hide", favList.length > 0);
+
+  // Profile Stats & Rank
+  const myUploads = assets.filter(a => a.ownerEmail === email).length;
+  const dlCount = stats.downloads || 0;
+  let rIdx = 0;
+  RANKS.forEach((r, idx) => { if (dlCount >= r[1]) rIdx = idx; });
+  const nextRank = RANKS[rIdx + 1];
+
+  document.getElementById("statDl").textContent = dlCount;
+  document.getElementById("statUploads").textContent = myUploads;
+  document.getElementById("statFavs").textContent = stats.favs.length;
+  document.getElementById("statRank").textContent = RANKS[rIdx][0];
+  document.getElementById("rankText").textContent = nextRank
+    ? `${nextRank[1] - dlCount} more downloads until ${nextRank[0]}`
+    : "Maximum creator rank reached";
+  document.getElementById("rankBar").style.width =
+    (nextRank ? ((dlCount - RANKS[rIdx][1]) / (nextRank[1] - RANKS[rIdx][1])) * 100 : 100) + "%";
+
+  document.getElementById("profIdentity").innerHTML = `
+    <span>${escapeHTML(user.name || "")}</span>
+    ${isOwner(email) ? verifiedBadgeHTML() + `<span class="owner-tag">Verified Owner</span>` : ""}
+  `;
+  document.getElementById("profEmail").textContent = email || "";
+}
+
+document.getElementById("searchInput").oninput = renderAll;
+
+function formatBytes(bytes) {
+  if (!bytes) return "1 KB";
+  return bytes >= 1048576 ? (bytes / 1048576).toFixed(1) + " MB" : Math.max(1, Math.round(bytes / 1024)) + " KB";
+}
+
+function escapeHTML(str) {
+  return String(str).replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+}
+
+// Init Upload Category Dropdown
+CATEGORIES.slice(1).forEach(c => {
+  const opt = document.createElement("option");
+  opt.value = c;
+  opt.textContent = c;
+  document.getElementById("upCat").appendChild(opt);
+});
+
+ensureSeedAssets();
+syncSession();
+</script>
+</body>
+</html>
